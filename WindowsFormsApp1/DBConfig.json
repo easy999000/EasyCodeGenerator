@@ -1,0 +1,16 @@
+{
+  "config": [
+    {
+      "name": "PartInChina_ERP",
+      "connString": "Integrated Security=False;server=172.168.16.41;database=PartInChina_ERP;User ID=admin;Password=admin4manage;Connect Timeout=30"
+    },
+    {
+      "name": "PartInChina_CRM",
+      "connString": "Integrated Security=False;server=172.168.16.41;database=PartInChina_CRM;User ID=admin;Password=admin4manage;Connect Timeout=30"
+    },
+    {
+      "name": "PartInChina_cn",
+      "connString": "Integrated Security=False;server=172.168.16.41;database=PartInChina_cn;User ID=admin;Password=admin4manage;Connect Timeout=30"
+    } 
+  ]
+}

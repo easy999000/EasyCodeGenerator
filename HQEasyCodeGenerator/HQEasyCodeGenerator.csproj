@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>zhaopeng</Authors>
+    <Company>HQbuy</Company>
+    <Version>1.0.0.3</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DBConfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DBConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="RazorEngine.NetCore" Version="2.2.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Template\" />
+  </ItemGroup>
+
+</Project>
