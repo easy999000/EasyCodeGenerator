@@ -15,8 +15,10 @@ namespace EasyCodeGenerator
         /// <summary>
         /// 描述
         /// </summary>
-        public string Describe {
-            get {
+        public string Describe
+        {
+            get
+            {
                 return __Describe;
             }
             set { __Describe = value.Replace("\r", ".").Replace("\n", " "); }
@@ -33,13 +35,27 @@ namespace EasyCodeGenerator
         public string Namespace { get; set; }
 
         /// <summary>
+        /// 需要引用的相关的命名空间,生成的时候传入
+        /// </summary>
+        public List<string> RelatedNamespace
+        {
+            get { return __RelatedNamespace; }
+            set { __RelatedNamespace = value;  }
+        }
+
+        /// <summary>
+        /// 需要引用的相关的命名空间,生成的时候传入
+        /// </summary>
+        private List<string> __RelatedNamespace = new List<string>();
+
+        /// <summary>
         /// 主键列
         /// </summary>
         public ColumnModel PrimaryKey
         {
             get
             {
-                var c1 = Columns.Where(w => w.IsPK  ).ToList();
+                var c1 = Columns.Where(w => w.IsPK).ToList();
                 if (c1.Count > 0)
                 {
                     return c1[0];

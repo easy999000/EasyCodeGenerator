@@ -20,15 +20,21 @@ using System.Text;
 using Hqew.DMSFrame.Entity;
 using Hqew.DMSFrame.Entity.Attributes;
 
-namespace @Model.Namespace
-    {
+@foreach (var item in Model.RelatedNamespace)
+{
+<text>using @item;
+</text>
+}
 
-        /// <summary>
-        /// @Model.Describe
-        ///</summary>
-        [Serializable]
-        [TableMapping(Name = "@Model.Name", PrimaryKey = "@Model.PrimaryKey.Name", DefaultOrderBy = "@Model.PrimaryKey.Name")]
-        public class @Model.Name : DBEntity
+namespace @Model.Namespace
+{
+
+    /// <summary>
+    /// @Model.Describe
+    ///</summary>
+    [Serializable]
+    [TableMapping(Name = "@Model.Name", PrimaryKey = "@Model.PrimaryKey.Name", DefaultOrderBy = "@Model.PrimaryKey.Name")]
+    public class @Model.Name : DBEntity
     {
 
         /// <summary>
@@ -39,7 +45,7 @@ namespace @Model.Namespace
         @foreach (var item in Model.Columns)
         {
             <text>
-            @item.CodeType __@item.Name; </text>
+            @item.CSharpType __@item.Name; </text>
         } 
         @foreach (var item in Model.Columns)
         {
@@ -47,8 +53,8 @@ namespace @Model.Namespace
             /// <summary>
             /// @item.Describe
             /// </summary>
-            [ColumnMapping(Name = "@item.Name" , @(item.IsAutoIncrement=="1"? "AutoIncrement = true,":"") ColumnType =@item.DMSType,  Length =@item.DBTypeLength)]
-            public @item.CodeType @item.Name
+            [ColumnMapping(Name = "@item.Name" , @(item.IsDBAutoIncrement? "AutoIncrement = true,":"") ColumnType =@item.DMSType,  Length =@item.DBTypeLength)]
+            public @item.CSharpType @item.Name
             {
                 get { return this.__@item.Name; }
                 set

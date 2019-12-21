@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 using RazorEngine;
 using RazorEngine.Templating; // For extension methods.
 
@@ -125,7 +126,7 @@ namespace EasyCodeGenerator
         /// <param name="TemplateName">模板名字,不要文件扩展名</param>
         /// <param name="Tables"></param>
         /// <returns></returns>
-        public string Build(string TemplateFileName, string TemplateNamespace, List<TableModel> Tables)
+        public string Build(string TemplateFileName, string TemplateNamespace, List<TableModel> Tables, List<string> RelatedNamespace)
         {
             string TemplateName = Path.GetFileNameWithoutExtension(TemplateFileName);
             lock (Engine.Razor)
@@ -145,6 +146,7 @@ namespace EasyCodeGenerator
             {
                 var Table = item;
                 Table.Namespace = TemplateNamespace;
+                Table.RelatedNamespace = RelatedNamespace.Distinct().ToList();
                 var result =
                     Engine.Razor.RunCompile(TemplateName, typeof(TableModel), Table);
 

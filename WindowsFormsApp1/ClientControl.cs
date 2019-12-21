@@ -207,9 +207,12 @@ namespace EasyCodeGeneratorForm
                     return "命名空间不能为空";
                 }
             }
+            ///当前生成批次的命名空间
+            List<string> RelatedNamespace = buildTemplate.Select(p => p.Namespace).ToList();
+
             foreach (var item in buildTemplate)
             {
-                this.CodeBuild.Build(item.FileName, item.Namespace, buildTables);
+                this.CodeBuild.Build(item.FileName, item.Namespace, buildTables, RelatedNamespace);
             }
 
 

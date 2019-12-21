@@ -72,12 +72,12 @@ namespace EasyCodeGenerator
         /// <summary>
         /// 代码数据类型
         /// </summary>
-        public string CodeType
+        public string CSharpType
         {
             get
             {
-                string type = GetCsharpType(DBType);
-                return type + CodeIsNull();
+                string type = GetCSharpType(DBType);
+                return type +( HasQuestionMark ? "?" : "");
             }
         }
 
@@ -85,14 +85,18 @@ namespace EasyCodeGenerator
         /// 
         /// </summary>
         /// <returns></returns>
-        private string CodeIsNull()
+        public bool HasQuestionMark
         {
-            if (this.IsDBTypeNull && CanNullType.Contains(this.DBType))
+            get
             {
-                return "?";
+                if (this.IsDBTypeNull && CanNullType.Contains(this.DBType))
+                {
+                    return true;
+                }
+                return false;
             }
-            return "";
         }
+         
 
         /// <summary>
         /// c#类型,没有问号 
@@ -100,9 +104,8 @@ namespace EasyCodeGenerator
         public string CsharpNoQuestionMark
         {
             get
-            {
-                int? i;
-                return GetCsharpType(DBType);
+            { 
+                return GetCSharpType(DBType);
             }
         }
 
@@ -121,17 +124,7 @@ namespace EasyCodeGenerator
                 return false;
             }
         }
-
-        /// <summary>
-        /// 代码数据类型
-        /// </summary>
-        public bool IsNull
-        {
-            get
-            {
-                return IsDBTypeNull;
-            }
-        }
+         
 
         /// <summary>
         /// DMS 数据类型
@@ -147,7 +140,7 @@ namespace EasyCodeGenerator
 
 
         /// <summary>
-        /// 获取DMS数据类型
+        /// 获取DMS数据类型,只是类型,不包含null符号
         /// </summary>
         /// <param name="SqlType"></param>
         /// <returns></returns>
@@ -162,11 +155,11 @@ namespace EasyCodeGenerator
         }
 
         /// <summary>
-        /// 获取c# 数据类型
+        /// 获取c# 数据类型,只是类型,不包含null符号
         /// </summary>
         /// <param name="SqlType"></param>
         /// <returns></returns>
-        public static string GetCsharpType(string SqlType)
+        public static string GetCSharpType(string SqlType)
         {
             if (!DataTypeSqlToCshape.ContainsKey(SqlType))
             {

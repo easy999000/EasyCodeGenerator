@@ -22,9 +22,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using HqbuyApi.Sales.Service.DBModel;
 using Hqew.DMSFrame.BLL;
 using Hqew.DMSFrame.Entity.ExpressionClips;
+
+@foreach (var item in Model.RelatedNamespace)
+{
+<text>using @item;
+</text>
+}
 
 namespace  @Model.Namespace
 {
@@ -32,12 +37,11 @@ namespace  @Model.Namespace
     /// @className 容器
     /// </summary>
     public partial class @className : BaseClient.BaseContainer<@baseName>
-    {
-        #region 公开 
-        #region 属性
+    { 
+        #region 公开属性
 
         #endregion
-        #region 方法
+        #region 公开方法
     
 
         internal static int AddList(List<@(className)> input)
@@ -50,18 +54,18 @@ namespace  @Model.Namespace
         /// <summary>
         /// 删除条件数据 慎用!!
         /// </summary>
-        internal int Delete(@(whereName)  input)
+        internal int Delete(@(whereName)  Input)
         {
-            WhereClip<@baseName> where = GetWhere(input);
+            WhereClip<@baseName> where =  Input.GetWhere();
             return this.hqBuyBll.Delete(where);
         }
     
         /// <summary>
         /// 查询数量
         /// </summary>
-        internal int GetCount(@(whereName)  input)
+        internal int GetCount(@(whereName)  Input)
         {
-            WhereClip<@baseName> where = GetWhere(input);
+            WhereClip<@baseName> where = Input.GetWhere();
             return this.hqBuyBll.GetCount(where);
         }
     
@@ -79,9 +83,9 @@ namespace  @Model.Namespace
         /// 条件递增
         /// </summary>
         /// <param name="input"></param>
-        internal int EditAppend(@(whereName) input)
+        internal int EditAppend(@(whereName) Input)
         {
-            WhereClip<@baseName> where = GetWhere(input);
+            WhereClip<@baseName> where =  Input.GetWhere();
 
             return this.hqBuyBll.EditAppend(this.core, where);
         }
@@ -101,9 +105,9 @@ namespace  @Model.Namespace
         /// 条件更新
         /// </summary>
         /// <param name="input"></param>
-        internal int update(@(whereName) input)
+        internal int update(@(whereName) Input)
         {
-            WhereClip<@baseName> where = GetWhere(input);
+            WhereClip<@baseName> where = Input.GetWhere();
 
             return this.hqBuyBll.Edit(this.core, where);
         }
@@ -114,7 +118,7 @@ namespace  @Model.Namespace
         /// </summary>
         /// <returns></returns>
         internal  @className  GetOne(
-            @Model.PrimaryKey.CodeType key
+            @Model.PrimaryKey.CSharpType key
            )
         {    
             var v1 = GetList(new @(whereName)(){ @Model.PrimaryKey.Name=key }
@@ -176,12 +180,12 @@ namespace  @Model.Namespace
         /// </summary>
         /// <returns></returns>
         internal List<@className> GetList(
-            @whereName input
+            @whereName Input
             , int TopN
             ,ColumnsClip<@baseName> Column
            )
         { 
-            WhereClip<@baseName> where=GetWhere(input);
+            WhereClip<@baseName> where= Input.GetWhere();
      
             return GetList(
             TopN
@@ -261,11 +265,9 @@ namespace  @Model.Namespace
         }
 
 
-        #endregion
-        #endregion
-
-        #region 私有 
-        #region 属性
+        #endregion 
+     
+        #region 私有属性
     
 
         /// <summary>
@@ -283,37 +285,8 @@ namespace  @Model.Namespace
         ));
 
         #endregion
-        #region 方法
-
-        /// <summary>
-        /// 获取where条件
-        /// </summary>
-        /// <param name="where"></param>
-        /// <returns></returns>
-        private WhereClip<@(baseName)> GetWhere(@whereName Input)
-        {
-            WhereClip<@(baseName)> w =
-                new WhereClip<@(baseName)>();
-
-            if (Input.@(Model.PrimaryKey.Name) != null && Input.@(Model.PrimaryKey.Name) > 0)
-            {
-                w.And(p => p.@(Model.PrimaryKey.Name) == Input.@(Model.PrimaryKey.Name));
-            }
+        #region 私有方法
      
-            if (GetWhere2 != null)
-            {
-                w = GetWhere2?.Invoke(Input);
-
-            }
-            return w;
-        }
-    
-        /// <summary>
-        /// 用于分部类,扩展where方法
-        /// </summary>
-        private Func<@(whereName) , WhereClip<@(baseName)>> GetWhere2;
-
-        #endregion
-        #endregion
+        #endregion 
     }
 }

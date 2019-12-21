@@ -23,14 +23,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text; 
 
-namespace @Model.Namespace
-    {
+@foreach (var item in Model.RelatedNamespace)
+{
+<text>using @item;
+</text>
+}
 
-        /// <summary>
-        /// @Model.Describe
-        ///</summary>
-        [Serializable] 
-        public class @className  
+namespace @Model.Namespace
+{
+
+    /// <summary>
+    /// @Model.Describe
+    ///</summary>
+    [Serializable] 
+    public class @className  
     {
 
         /// <summary>
@@ -44,7 +50,7 @@ namespace @Model.Namespace
             /// <summary>
             /// @item.Describe
             /// </summary>
-            public @item.CodeType @item.Name
+            public @item.CSharpType @item.Name
             {
                 get;
                 set;
