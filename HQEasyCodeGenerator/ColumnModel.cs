@@ -206,7 +206,7 @@ namespace EasyCodeGenerator
         {
             DataTypeSqlToCshape.Add("int", "int");
             DataTypeSqlToCshape.Add("text", "string");
-            DataTypeSqlToCshape.Add("bigint", "int64");
+            DataTypeSqlToCshape.Add("bigint", "long");
             DataTypeSqlToCshape.Add("binary", "Byte");
             DataTypeSqlToCshape.Add("bit", "bool");
             DataTypeSqlToCshape.Add("char", "string");
