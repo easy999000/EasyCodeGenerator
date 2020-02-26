@@ -21,7 +21,20 @@ namespace EasyCodeGenerator
             {
                 return __Describe;
             }
-            set { __Describe = value.Replace("\r", ".").Replace("\n", " "); }
+            set {
+
+                if (value != null)
+                {
+
+                    __Describe = value.Replace("\r", ".").Replace("\n", " ");
+                }
+                else
+                {
+                    __Describe = null;
+                }
+                 
+            
+            }
         }
 
         /// <summary>
@@ -40,7 +53,7 @@ namespace EasyCodeGenerator
         public List<string> RelatedNamespace
         {
             get { return __RelatedNamespace; }
-            set { __RelatedNamespace = value;  }
+            set { __RelatedNamespace = value; }
         }
 
         /// <summary>
@@ -51,7 +64,7 @@ namespace EasyCodeGenerator
         /// <summary>
         /// 主键列
         /// </summary>
-        public ColumnModel PrimaryKey
+        public ColumnModel PrimaryKeyColumn
         {
             get
             {
@@ -62,7 +75,25 @@ namespace EasyCodeGenerator
                 }
                 else
                 {
-                    return new ColumnModel() { Name = "" };
+                    return null;
+                }
+            }
+        }
+        /// <summary>
+        /// 自增列
+        /// </summary>
+        public ColumnModel IncrementColumn
+        {
+            get
+            {
+                var c1 = Columns.Where(w => w.IsDBAutoIncrement).ToList();
+                if (c1.Count > 0)
+                {
+                    return c1[0];
+                }
+                else
+                {
+                    return null;
                 }
             }
         }

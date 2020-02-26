@@ -147,6 +147,13 @@ namespace EasyCodeGenerator
                 var Table = item;
                 Table.Namespace = TemplateNamespace;
                 Table.RelatedNamespace = RelatedNamespace.Distinct().ToList();
+
+#if DEBUG
+                var v1 = Table.Columns.Where(p => p.DBType == null).ToList();
+             //   var v2 = Table.Columns.Where(p => p.DBType == null).ToList();
+#endif
+
+
                 var result =
                     Engine.Razor.RunCompile(TemplateName, typeof(TableModel), Table);
 

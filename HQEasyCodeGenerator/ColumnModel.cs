@@ -17,6 +17,9 @@ namespace EasyCodeGenerator
             ColumnModel.SetDataTypeSqlToCshapeDic();
         }
 
+        /// <summary>
+        /// 列描述
+        /// </summary>
         string __Describe;
 
         /// <summary>
@@ -30,7 +33,15 @@ namespace EasyCodeGenerator
             }
             set
             {
-                __Describe = value.Replace("\r", ".").Replace("\n", " ");
+                if (value != null)
+                {
+
+                    __Describe = value.Replace("\r", ".").Replace("\n", " ");
+                }
+                else
+                {
+                    __Describe = null;
+                }
             }
         }
 
@@ -77,26 +88,26 @@ namespace EasyCodeGenerator
             get
             {
                 string type = GetCSharpType(DBType);
-                return type +( HasQuestionMark ? "?" : "");
+                return type + (HasQuestionMark ? "?" : "");
             }
         }
 
         /// <summary>
-        /// 
+        /// 类型是否有 问号 ?
         /// </summary>
         /// <returns></returns>
         public bool HasQuestionMark
         {
             get
             {
-                if (this.IsDBTypeNull && CanNullType.Contains(this.DBType))
+                if (this.IsDBTypeNull && CShapValueType.Contains(this.DBType))
                 {
                     return true;
                 }
                 return false;
             }
         }
-         
+
 
         /// <summary>
         /// c#类型,没有问号 
@@ -104,7 +115,7 @@ namespace EasyCodeGenerator
         public string CsharpNoQuestionMark
         {
             get
-            { 
+            {
                 return GetCSharpType(DBType);
             }
         }
@@ -117,14 +128,13 @@ namespace EasyCodeGenerator
         {
             get
             {
-                if (CanNullType.Contains(this.DBType))
+                if (CShapValueType.Contains(this.DBType))
                 {
                     return true;
                 }
                 return false;
             }
         }
-         
 
         /// <summary>
         /// DMS 数据类型
@@ -180,9 +190,9 @@ namespace EasyCodeGenerator
         public static Dictionary<string, DMSFrameColumnTypes> DataTypeSqlToDMSFrameColumnTypes = new Dictionary<string, DMSFrameColumnTypes>();
 
         /// <summary>
-        /// 可以为空的类型
+        /// c#值类型类型
         /// </summary>
-        public static string[] CanNullType = new string[] {
+        public static string[] CShapValueType = new string[] {
 
             "int" ,
             "bigint" ,

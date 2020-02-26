@@ -1,10 +1,10 @@
 ﻿@model EasyCodeGenerator.TableModel
 @@CodeFileNameFormat {0}Container_auto
 @{ 
-//CodeFileNameFormat 文件名字指令的参数会以 ( TableName, TemplateName)的顺序传入,CodeFileNameFormat 命令以单行的方式进行设置,可以不设置CodeFileNameFormat指令
+    //CodeFileNameFormat 文件名字指令的参数会以 ( TableName, TemplateName)的顺序传入,CodeFileNameFormat 命令以单行的方式进行设置,可以不设置CodeFileNameFormat指令
 
     string className = Model.Name + "Container";
-    string baseName = Model.Name  ;
+    string baseName = Model.Name;
     string whereName = Model.Name + "Where";
 }
 
@@ -36,19 +36,21 @@ namespace  @Model.Namespace
     /// <summary>
     /// @className 容器
     /// </summary>
-    public partial class @className : BaseClient.BaseContainer<@baseName>
+    public partial class @className : BaseContainer<@baseName>
     { 
         #region 公开属性
 
         #endregion
         #region 公开方法
     
-
-        internal static int AddList(List<@(className)> input)
+    
+        /// <summary>
+        ///添加集合
+        /// </summary>
+        internal  int AddList(List<@(className)> input)
         {
-            BaseBLL hqBuyBll2 = new BaseBLL();
             var v1 = input.Select(p => p.core).ToList();
-            return hqBuyBll2.AddList(v1);
+            return this.hqBuyBll.AddList(v1);
         }
     
         /// <summary>
@@ -68,17 +70,8 @@ namespace  @Model.Namespace
             WhereClip<@baseName> where = Input.GetWhere();
             return this.hqBuyBll.GetCount(where);
         }
-    
-        /// <summary>
-        /// 主键递增
-        /// </summary>
-        internal int EditAppend()
-        {
-            WhereClip<@baseName> where = new WhereClip<@baseName>();
-            where.And(p => p.@(Model.PrimaryKey.Name) == this.core.@(Model.PrimaryKey.Name));
+     
 
-            return this.hqBuyBll.EditAppend(this.core, where);
-        }
         /// <summary>
         /// 条件递增
         /// </summary>
@@ -90,17 +83,7 @@ namespace  @Model.Namespace
             return this.hqBuyBll.EditAppend(this.core, where);
         }
 
-    
-        /// <summary>
-        /// 主键更新
-        /// </summary>
-        internal int update()
-        {
-            WhereClip<@baseName> where = new WhereClip<@baseName>();
-            where.And(p => p.@(Model.PrimaryKey.Name) == this.core.@(Model.PrimaryKey.Name));
-
-            return this.hqBuyBll.Edit(this.core, where);
-        }
+     
         /// <summary>
         /// 条件更新
         /// </summary>
@@ -112,27 +95,7 @@ namespace  @Model.Namespace
             return this.hqBuyBll.Edit(this.core, where);
         }
 
-    
-        /// <summary>
-        /// 查询集合
-        /// </summary>
-        /// <returns></returns>
-        internal  @className  GetOne(
-            @Model.PrimaryKey.CSharpType key
-           )
-        {    
-            var v1 = GetList(new @(whereName)(){ @Model.PrimaryKey.Name=key }
-             , 1
-             );
-            if (v1.Count > 0)
-            {
-                return v1[0];
-            }
-            else
-            {
-                return null;
-            } 
-        }
+     
     
         /// <summary>
         /// 查询集合
@@ -203,10 +166,15 @@ namespace  @Model.Namespace
             ,ColumnsClip<@baseName> Column
             ,WhereClip<@baseName> where)
         { 
-     
-            OrderByClip<@baseName> orderby1 = new OrderByClip<@baseName>();
-            orderby1.Append(o => o.OrderBy(o.@(Model.PrimaryKey.Name).Desc()));
-      
+             OrderByClip<@baseName> orderby1 = null;
+
+             @if(Model.PrimaryKeyColumn != null) { 
+            <text>
+             orderby1 = new OrderByClip<@baseName>();
+                orderby1.Append(o => o.OrderBy(o.@(Model.PrimaryKeyColumn.Name).Desc()));
+            </text>
+            }
+
             return GetList(
             TopN
             ,Column
@@ -242,8 +210,14 @@ namespace  @Model.Namespace
         /// <returns></returns>
         internal int Add()
         {
-
-            core.ChangedMappingProperties.Remove(nameof(@(Model.Name).@(Model.PrimaryKey.Name)));
+    @{
+        if (Model.IncrementColumn!=null)
+        {
+            <text> 
+            core.ChangedMappingProperties.Remove(nameof(@(Model.Name).@(Model.IncrementColumn.Name)));
+    </text>
+        }
+     }
 
             object o = hqBuyBll.Add(core, true);
 
@@ -257,8 +231,14 @@ namespace  @Model.Namespace
             {
                 return 0;
             }
-
-            this.core.@(Model.PrimaryKey.Name) = id;
+            @{
+                if (Model.PrimaryKeyColumn!=null)
+                {
+                <text> 
+                this.core.@(Model.PrimaryKeyColumn.Name) = id;
+        </text>
+                }
+            }
 
             return id;
 
