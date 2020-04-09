@@ -80,10 +80,6 @@ namespace  @Model.Namespace
                 w = GetWhereFunc?.Invoke();
             }
 
-            //// this.nullAttribute
-
-            //w.And(p => p.KFRemark.IsNotNull());
-
             if (w == null)
             {
                 w = new WhereClip<@baseName>();
@@ -92,12 +88,54 @@ namespace  @Model.Namespace
             @foreach (var item in Model.Columns)
             {
                 <text>
-                if (this.@item.Name != null)
-                {
-                    w.And(p => p.@item.Name == this.@item.Name);
-                }
+            if (this.@item.Name != null)
+            {
+                w.And(p => p.@item.Name == this.@item.Name);
+            }
 </text>
             }
+
+            /// 非空条件
+            foreach (var item in this.notNullAttribute)
+            {
+                switch (item)
+                {
+    
+            @foreach (var item in Model.Columns)
+            {
+                <text>
+                    case "@item.Name":
+                        w.And(p => p.@(item.Name).IsNotNull());
+                        break;
+</text>
+            }
+                   
+                    default:
+                        break;
+                }
+            }
+
+            /// 非空条件
+            foreach (var item in this.nullAttribute)
+            {
+                switch (item)
+                {
+    
+            @foreach (var item in Model.Columns)
+            {
+                <text>
+                    case "@item.Name":
+                        w.And(p => p.@(item.Name).IsNull());
+                        break;
+</text>
+            }
+                   
+                    default:
+                        break;
+                }
+            }
+
+
 
             return w;
         }

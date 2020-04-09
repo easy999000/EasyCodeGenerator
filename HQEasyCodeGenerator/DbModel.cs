@@ -63,6 +63,7 @@ namespace EasyCodeGenerator
                 {
                     DBType = dateType,
                     DBTypeLength = typeLength,
+
                     DefaultValue = defaultValue,
                     IsDBAutoIncrement = isIdentification == "1",
                     Describe = columnDescribe,
@@ -70,6 +71,17 @@ namespace EasyCodeGenerator
                     IsPK = isPK == "1",
                     Name = columnName
                 };
+                if (column.DBType == "nchar"
+                    || column.DBType == "nvarchar")
+
+                {
+                    int numLen = 0;
+                    if (int.TryParse(column.DBTypeLength, out numLen))
+                    {
+
+                        column.DBTypeLength =( numLen / 2).ToString();
+                    }
+                }
 
                 TableModel table = null;
                 var tList = Tables.Where(w => w.Name == tableName).ToList();

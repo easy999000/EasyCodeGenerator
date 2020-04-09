@@ -110,7 +110,7 @@ namespace EasyCodeGenerator
 
 
         /// <summary>
-        /// c#类型,没有问号 
+        /// c#原类型,没有问号 
         /// </summary>
         public string CsharpNoQuestionMark
         {
