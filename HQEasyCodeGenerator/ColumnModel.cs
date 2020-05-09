@@ -221,6 +221,7 @@ namespace EasyCodeGenerator
             DataTypeSqlToCshape.Add("bit", "bool");
             DataTypeSqlToCshape.Add("char", "string");
             DataTypeSqlToCshape.Add("datetime", "DateTime");
+            DataTypeSqlToCshape.Add("date", "DateTime");
             DataTypeSqlToCshape.Add("decimal", "decimal");
             DataTypeSqlToCshape.Add("float", "float");
             DataTypeSqlToCshape.Add("money", "decimal");
@@ -248,6 +249,7 @@ namespace EasyCodeGenerator
             DataTypeSqlToDMSFrameColumnTypes.Add("bit", DMSFrameColumnTypes.Bool);
             DataTypeSqlToDMSFrameColumnTypes.Add("char", DMSFrameColumnTypes.String);
             DataTypeSqlToDMSFrameColumnTypes.Add("datetime", DMSFrameColumnTypes.DateTime);
+            DataTypeSqlToDMSFrameColumnTypes.Add("date", DMSFrameColumnTypes.DateTime);
             DataTypeSqlToDMSFrameColumnTypes.Add("decimal", DMSFrameColumnTypes.Decimal);
             DataTypeSqlToDMSFrameColumnTypes.Add("float", DMSFrameColumnTypes.Float);
             DataTypeSqlToDMSFrameColumnTypes.Add("money", DMSFrameColumnTypes.Decimal);
