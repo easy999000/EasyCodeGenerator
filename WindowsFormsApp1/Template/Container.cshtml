@@ -24,6 +24,7 @@ using System.Text;
 using System.Linq;
 using Hqew.DMSFrame.BLL;
 using Hqew.DMSFrame.Entity.ExpressionClips;
+using Hqbuy.Utility;
 
 @foreach (var item in Model.RelatedNamespace)
 {
@@ -43,12 +44,14 @@ namespace  @Model.Namespace
         #endregion
         #region 公开方法
     
-
-        internal static int AddList(List<@(className)> input)
+    
+        /// <summary>
+        ///添加集合
+        /// </summary>
+        internal  int AddList(List<@(className)> input)
         {
-            BaseBLL hqBuyBll2 = new BaseBLL();
             var v1 = input.Select(p => p.core).ToList();
-            return hqBuyBll2.AddList(v1);
+            return this.hqBuyBll.AddList(v1);
         }
     
         /// <summary>
