@@ -48,7 +48,7 @@ namespace  @Model.Namespace
         /// <summary>
         ///添加集合
         /// </summary>
-        internal  int AddList(List<@(className)> input)
+        public  int AddList(List<@(className)> input)
         {
             var v1 = input.Select(p => p.core).ToList();
             return this.hqBuyBll.AddList(v1);
@@ -57,7 +57,7 @@ namespace  @Model.Namespace
         /// <summary>
         /// 删除条件数据 慎用!!
         /// </summary>
-        internal int Delete(@(whereName)  Input)
+        public int Delete(@(whereName)  Input)
         {
             WhereClip<@baseName> where =  Input.GetWhere();
             return this.hqBuyBll.Delete(where);
@@ -66,7 +66,7 @@ namespace  @Model.Namespace
         /// <summary>
         /// 查询数量
         /// </summary>
-        internal int GetCount(@(whereName)  Input)
+        public int GetCount(@(whereName)  Input)
         {
             WhereClip<@baseName> where = Input.GetWhere();
             return this.hqBuyBll.GetCount(where);
@@ -77,7 +77,7 @@ namespace  @Model.Namespace
         /// 条件递增
         /// </summary>
         /// <param name="input"></param>
-        internal int EditAppend(@(whereName) Input)
+        public int EditAppend(@(whereName) Input)
         {
             WhereClip<@baseName> where =  Input.GetWhere();
 
@@ -89,7 +89,7 @@ namespace  @Model.Namespace
         /// 条件更新
         /// </summary>
         /// <param name="input"></param>
-        internal int update(@(whereName) Input)
+        public int update(@(whereName) Input)
         {
             WhereClip<@baseName> where = Input.GetWhere();
 
@@ -102,7 +102,7 @@ namespace  @Model.Namespace
         /// 查询集合
         /// </summary>
         /// <returns></returns>
-        internal @className  GetOne(
+        public @className  GetOne(
             @whereName input 
            )
         {   
@@ -126,7 +126,7 @@ namespace  @Model.Namespace
         /// 查询集合
         /// </summary>
         /// <returns></returns>
-        internal List<@className> GetList(
+        public List<@className> GetList(
             @whereName input
             , int TopN
            )
@@ -143,7 +143,7 @@ namespace  @Model.Namespace
         /// 查询集合
         /// </summary>
         /// <returns></returns>
-        internal List<@className> GetList(
+        public List<@className> GetList(
             @whereName Input
             , int TopN
             ,ColumnsClip<@baseName> Column
@@ -162,7 +162,7 @@ namespace  @Model.Namespace
         /// 查询集合
         /// </summary>
         /// <returns></returns>
-        internal List<@className> GetList(
+        public List<@className> GetList(
             int TopN
             ,ColumnsClip<@baseName> Column
             ,WhereClip<@baseName> where)
@@ -187,7 +187,7 @@ namespace  @Model.Namespace
         /// 查询集合
         /// </summary>
         /// <returns></returns>
-        internal List<@className> GetList( 
+        public List<@className> GetList( 
             int TopN
             ,ColumnsClip<@baseName> Column
             ,WhereClip<@baseName> where
@@ -209,7 +209,7 @@ namespace  @Model.Namespace
         /// 添加数据到数据库,直接插入,不做判断,用作底层
         /// </summary>
         /// <returns></returns>
-        internal int Add()
+        public int Add()
         {
     @{
         if (Model.IncrementColumn!=null)
